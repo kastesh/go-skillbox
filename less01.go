@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Введите целое число")
-	var i int
-	fmt.Scan(&i)
-	fmt.Println("Квадрат числа", i, "равен", i*i)
+	fmt.Print("Как Вас зовут? ")
+	var name string
+	fmt.Scan(&name)
+	fmt.Println("Вы ввели имя: ", name)
 }
