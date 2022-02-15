@@ -2,34 +2,32 @@ package main
 
 import (
 	"fmt"
-	"regexp"
+	"strconv"
+	"unicode"
 )
 
 /*
 Go is an Open source programming Language that makes it Easy to build simple, reliable, and efficient Software.
 */
 func main() {
-	s := "Go  is an Open source programming Language " +
+	s := "Go  is an Open source programming Language aбракАдабра" +
 		"that makes it Easy to build simple, reliable, and efficient Software."
 
-	r, _ := regexp.Compile("[ ,.]+")
-	u, _ := regexp.Compile("^[A-Z]")
-
-	count := 0
-	for len(s) > 0 {
-		postition := r.FindStringIndex(s)
-		start := postition[0]
-		end := postition[1]
-
-		word := s[:start]
-		//fmt.Printf("[%s]\n", word)
-
-		upperPosition := u.FindStringIndex(word)
-		if len(upperPosition) > 0 {
-			count++
+	isFirstLetter := 1
+	countUpperCases := 0
+	for _, rune := range s {
+		alfa := strconv.QuoteRune(rune)
+		if isFirstLetter == 1 {
+			isFirstLetter = 0
+			if unicode.IsUpper(rune) {
+				fmt.Println(alfa)
+				countUpperCases++
+			}
 		}
-		//fmt.Println(upperPosition)
-		s = s[end:]
+
+		if unicode.IsSpace(rune) || unicode.IsPunct(rune) {
+			isFirstLetter = 1
+		}
 	}
-	fmt.Printf("Строка содержит %d слов с большой буквы.\n", count)
+	fmt.Printf("Строка содержит %d слов с большой буквы.\n", countUpperCases)
 }
